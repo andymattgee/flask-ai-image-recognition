@@ -4,36 +4,52 @@ import os
 import logging
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load environment variables from the .env file
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
 load_dotenv(dotenv_path)
 
-# Debug: Print environment variables (remove in production)
+# Check if the OpenAI API key is loaded
 api_key = os.environ.get("OPENAI_API_KEY")
 print(f"API Key found: {'Yes' if api_key else 'No'}")
 
 def create_app():
-    app = Flask(__name__)
+    """
+    Create and configure the Flask application.
     
-    # Configure logging
+    Returns:
+        app: The Flask application instance.
+    """
+    app = Flask(__name__)  # Initialize the Flask app
+    
+    # Set up logging
     logging.basicConfig(level=logging.INFO)
     app.logger.setLevel(logging.INFO)
     
-    # Enable CORS for all routes and origins
+    # Enable CORS for all routes
     CORS(app, 
-         resources={r"/*": {"origins": "*"}}, 
-         supports_credentials=True,
-         allow_headers=["Content-Type", "Authorization", "Accept"],
-         methods=["GET", "POST", "OPTIONS"])
+         resources={r"/*": {"origins": "*"}},  # Allow all origins
+         supports_credentials=True,  # Allow credentials
+         allow_headers=["Content-Type", "Authorization", "Accept"],  # Allowed headers
+         methods=["GET", "POST", "OPTIONS"])  # Allowed methods
     
+    # Import and register the main blueprint
     from app.routes import main_bp
     app.register_blueprint(main_bp)
     
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept')
-        response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+        """
+        Add CORS headers to the response.
+        
+        Args:
+            response: The response object.
+        
+        Returns:
+            response: The modified response object.
+        """
+        response.headers.add('Access-Control-Allow-Origin', '*')  # Allow all origins
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept')  # Allowed headers
+        response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')  # Allowed methods
         return response
     
-    return app 
+    return app  # Return the configured app instance 

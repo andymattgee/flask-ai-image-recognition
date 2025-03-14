@@ -78,7 +78,7 @@ def analyze_image():
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "What is in this picture?"},
+                        {"type": "text", "text": "What is in this picture?, keep the response short and concise"},
                         {
                             "type": "image_url",
                             "image_url": {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -100,32 +101,7 @@ export default function Home() {
       fileInputRef.current.value = '';
     }
   };
-
-  const testApiConnection = async () => {
-    setApiStatus('Testing connection...');
-    setError(null);
-    
-    try {
-      const response = await fetch('http://localhost:5001/api/test', {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Accept': 'application/json',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
-      }
-      
-      const data = await response.json();
-      setApiStatus(`Connection successful: ${data.message}`);
-    } catch (err) {
-      console.error('API test error:', err);
-      setApiStatus(null);
-      setError(`API Connection Error: ${err instanceof Error ? err.message : 'Unknown error occurred'}`);
-    }
-  };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -189,10 +165,12 @@ export default function Home() {
                   </>
                 ) : (
                   <div className="relative w-full h-64 flex items-center justify-center border-2 border-gray-300 rounded-md p-2 bg-gray-50">
-                    <img
+                    <Image
                       src={previewUrl}
                       alt="Preview"
-                      className="max-h-full max-w-full object-contain"
+                      layout="fill"
+                      objectFit="contain"
+                      className="max-h-full max-w-full"
                     />
                     <button
                       type="button"
