@@ -97,4 +97,4 @@ If the image analysis fails:
 
 - **Frontend**: Next.js, TypeScript, Tailwind CSS
 - **Backend**: Python, Flask
-- **AI**: OpenAI GPT-4 Vision Preview 
+- **AI**: OpenAI GPT-4 Turbo
