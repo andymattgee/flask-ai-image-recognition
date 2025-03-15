@@ -101,7 +101,19 @@ export default function Home() {
       fileInputRef.current.value = '';
     }
   };
-  
+
+  const handleTestApi = async () => {
+    try {
+      // Update with the correct backend URL
+      const response = await fetch('http://localhost:5001/api/test');
+      console.log('Response Status:', response.status);
+      const data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error connecting to API');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -113,15 +125,20 @@ export default function Home() {
           <p className="mt-3 text-xl text-gray-500">
             Upload an image and get AI-powered analysis
           </p>
-         
+
           {apiStatus && (
             <p className="mt-2 text-sm text-green-600">{apiStatus}</p>
           )}
+
+        </div>
+
+        <div>
+          <button onClick={handleTestApi} className="bg-green-500 text-white font-bold py-2 px-4 rounded mb-4 w-full">Test API Connection</button>
         </div>
 
         <div className="bg-white shadow overflow-hidden rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <div 
+            <div
               className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
               onDragOver={handleDragOver}
               onDrop={handleDrop}
@@ -198,11 +215,10 @@ export default function Home() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={!selectedImage || isLoading}
-                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                  !selectedImage || isLoading
-                    ? 'bg-indigo-300 cursor-not-allowed'
-                    : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                }`}
+                className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${!selectedImage || isLoading
+                  ? 'bg-indigo-300 cursor-not-allowed'
+                  : 'bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                  }`}
               >
                 {isLoading ? 'Analyzing...' : 'Analyze Image'}
               </button>
@@ -226,6 +242,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
