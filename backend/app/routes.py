@@ -78,7 +78,7 @@ def analyze_image():
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "What is in this picture?, keep the response short and concise"},
+                        {"type": "text", "text": "What is in this picture?"},
                         {
                             "type": "image_url",
                             "image_url": {
@@ -88,7 +88,7 @@ def analyze_image():
                     ]
                 }
             ],
-            max_tokens=300
+            max_tokens=500
         )
         
         # Extract the response text
