@@ -1,3 +1,5 @@
+# this file is for running the Flask application (python script -> python run.py)
+
 # Import the create_app function from the app module
 from app import create_app
 

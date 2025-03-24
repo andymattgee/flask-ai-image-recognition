@@ -79,7 +79,9 @@ export default function Home() {
       }
 
       const data = await response.json();
-      setAnalysisResult(data.result);
+      //should log in browser the json object of submitted clothing article
+      console.log('Response data:', data);
+      setAnalysisResult(`${data}`);
     } catch (err) {
       console.error('Error during image analysis:', err);
       setError(`Error: ${err instanceof Error ? err.message : 'Unknown error occurred'}`);
@@ -185,8 +187,9 @@ export default function Home() {
                     <Image
                       src={previewUrl}
                       alt="Preview"
-                      layout="fill"
-                      objectFit="contain"
+                      width={256} 
+                      height={256}
+                      style={{ objectFit: 'contain' }}
                       className="max-h-full max-w-full"
                     />
                     <button
