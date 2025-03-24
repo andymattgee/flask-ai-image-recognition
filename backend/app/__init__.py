@@ -1,3 +1,9 @@
+# init file could also be called app.py or main.py
+# This file is the entry point for the Flask application
+# This is where you create and configure the app via a factory function (create_app)
+# You could initialize database connections, configure extensions, and register blueprints here
+
+
 from flask import Flask
 from flask_cors import CORS
 import os
